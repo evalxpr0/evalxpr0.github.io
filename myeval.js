@@ -167,7 +167,7 @@ function myEval (expr) {
 						case "n": tmp2 += "\n"; break;
 						case "s": tmp2 += " "; break;
 						case "t": tmp2 += "\t"; break;
-						case "u": tmp2 += String.fromCharCode(parseInt(expr[z++]+expr[z++]+expr[z++]+expr[z++], 16));
+						case "u": tmp2 += String.fromCharCode(parseInt(expr[z++]+expr[z++]+expr[z++]+expr[z++], 16)); break;
 						default: tmp2 += tmp;
 					}
 					break;
