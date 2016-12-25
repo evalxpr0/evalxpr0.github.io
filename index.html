@@ -11,7 +11,10 @@
 	<body>
 		<div style="text-align: center">
 			<div style="float: left; width: 33.3%">
-				代码: <input type="button" onclick="check1()" value="检查" /><br />
+				代码: <input type="button" onclick="check1()" value="检查" />
+				<input type="button" onclick="addparen($('code1'), '(', ')')" value="加括号" />
+				<input type="button" onclick="addparen($('code1'), '\'', '\'')" value="加单引号" />
+				<input type="button" onclick="addparen($('code1'), '&quot;', '&quot;')" value="加双引号" /><br />
 				<textarea id="code1" style="width: 98%; height: 500px"></textarea><br />
 			</div>
 			<div style="float: left; width: 33.3%">
@@ -36,6 +39,13 @@
 		</div>
 		<script type="text/javascript">
 			function $(id) {return document.getElementById(id);} // function escapeHTML(e){return(""+e).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/'/g,"&#39;").replace(/</g,"&lt;").replace(/>/g,"&gt;")};
+			function addparen (el, p1, p2) {
+				var s = el.selectionStart;
+				var e = el.selectionEnd;
+				el.value = el.value.substring(0, s) + p1 + el.value.substring(s, e) + p2 + el.value.substring(e);
+				el.selectionStart = s;
+                el.selectionEnd = e + p1.length + p2.length;
+			}
 			window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{"bdSize":16},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://git123hub.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 		</script>
 		<script type="text/javascript" src="lib1.min.js" ></script>
