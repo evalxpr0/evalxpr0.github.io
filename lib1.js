@@ -3,6 +3,7 @@ function check1 () {
 	checked = $("code1").value.split(/\r?\n/);
 	lines = checked.length;
 	currline = 0;
+	userv = {};
 	callstack = [], callpointer = 0, datastack = [], datapointer = 0;
 	$("code2").value = getdebug();
 	clear3();
