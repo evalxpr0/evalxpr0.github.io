@@ -7,3 +7,7 @@ print(cook("a\\b\$c$("+>")d\u007ce") +> "\n")
 print(template("a\\b\$c$("+>")d\u007ce") +> "\n")
 print(quote ,Hello World,)
 pause()
+
+a := raw("a := raw(\"$(a)\")\nprint(template(\"$(a)\"))\npause()")
+print(template("a := raw(\"$(a)\")\nprint(template(\"$(a)\"))\npause()"))
+pause()
