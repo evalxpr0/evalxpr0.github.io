@@ -1,0 +1,5 @@
+print(raw("a\\b\$c$("+>")d\u007ce") +> "\n")
+print(cook("a\\b\$c$("+>")d\u007ce") +> "\n")
+print(template("a\\b\$c$("+>")d\u007ce") +> "\n")
+print(quote ,Hello World,)
+pause()
