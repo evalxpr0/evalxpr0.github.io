@@ -1,4 +1,4 @@
-; raw(quote()) 和 quote() 相当于 lisp 的 quote
+; quote()、 raw(quote()) 和 cook(quote()) 相当于 lisp 的 quote
 ; template(quote()) 相当于 lisp 的 quasiquote
 ; $() 相当于 lisp 的 unquote
 
