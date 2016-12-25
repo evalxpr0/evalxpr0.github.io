@@ -140,7 +140,7 @@ function myEval (expr) {
 			variables.push(tmp2);
 			tmp2 = "";
 		} else if (/\s/.test(tmp)) ;
-		else if (/\w/.test(tmp)) {
+		else if (/[$\w]/.test(tmp)) {
 			tmp2 += tmp;
 		} else break;
 	}
@@ -280,9 +280,9 @@ function myEval (expr) {
 				break;
 				default:
 					// debugger;
-					if (!/\w/.test(tmp)) { throw "Syntax Error"; }
+					if (!/[$\w]/.test(tmp)) { throw "Syntax Error"; }
 					tmp2 = tmp; z++;
-					while (z < len && /\w/.test(tmp = expr[z])) tmp2 += tmp, z++;
+					while (z < len && /[$\w]/.test(tmp = expr[z])) tmp2 += tmp, z++;
 					while (z < len && /\s/.test(tmp = expr[z])) z++;
 					ns[++np] = (tmp3 = userv["Vn" + tmp2]) == null ? (tmp3 = vtable["Vn" + tmp2]) : tmp3;
 					tmp3 != null && (tmp4 = tmp3._cook, tmp3.fquote && (
