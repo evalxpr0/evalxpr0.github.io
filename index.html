@@ -1,1 +1,37 @@
-<script src="myeval.min.js"></script>
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+			a { text-decoration: none; }
+		</style>
+		<meta charset="utf-8" />
+		<script src="myeval.min.js"></script>
+		<title>"evalxpr0" REPL</title>
+	</head>
+	<body>
+		<div style="text-align: center">
+			<div style="float: left; width: 33.3%">
+				代码: <input type="button" onclick="check1()" value="检查" /><br />
+				<textarea id="code1" style="width: 98%; height: 500px"></textarea><br />
+			</div>
+			<div style="float: left; width: 33.3%">
+				调试: <input type="button" onclick="step2()" value="单步" />
+				<input type="button" onclick="(interval = !interval) && auto2()" value="运行/暂停" /><br />
+				<textarea id="code2" style="width: 98%; height: 500px"></textarea><br />
+			</div>
+			<div style="float: left; width: 33.3%">
+				输出: <input type="button" onclick="clear3()" value="清除" /><br />
+				<textarea id="code3" style="width: 98%; height: 500px"></textarea><br />
+			</div>
+			<br style="clear: both" />
+		</div>
+		<div style="margin-top:5px; text-align: center;">
+			<a href="https://git123hub.github.io/index/">返回到首页</a>
+		</div>
+		<script type="text/javascript">
+			function $(id) {return document.getElementById(id);} // function escapeHTML(e){return(""+e).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/'/g,"&#39;").replace(/</g,"&lt;").replace(/>/g,"&gt;")};
+			window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{"bdSize":16},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://git123hub.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+		</script>
+		<script type="text/javascript" src="lib1.min.js" ></script>
+	</body>
+</html>
