@@ -14,17 +14,19 @@
 				代码: <input type="button" onclick="check1()" value="检查" />
 				<input type="button" onclick="addparen($('code1'), '(', ')')" value="加括号" />
 				<input type="button" onclick="addparen($('code1'), '\'', '\'')" value="加单引号" />
-				<input type="button" onclick="addparen($('code1'), '&quot;', '&quot;')" value="加双引号" />
-				<input type="button" onclick="addparenesc($('code1'))" value="加双引号并转义" /><br />
+				<input type="button" onclick="addparen($('code1'), '&quot;', '&quot;')" value="加双引号" /><br />
+				<input type="button" onclick="addparen($('code1'), '$')" value="加美元符号" />
+				<input type="button" onclick="addparen($('code1'), '_')" value="加下划线" />
+				<input type="button" onclick="addqesc($('code1'))" value="加双引号并转义" /><br />
 				<textarea id="code1" style="width: 98%; height: 500px"></textarea><br />
 			</div>
 			<div style="float: left; width: 33.3%">
 				调试: <input type="button" onclick="step2()" value="单步" />
-				<input type="button" onclick="(interval = !interval) &amp;&amp; auto2()" value="运行/暂停" /><br />
+				<input type="button" onclick="(interval = !interval) &amp;&amp; auto2()" value="运行/暂停" /><br /><br />
 				<textarea id="code2" style="width: 98%; height: 500px"></textarea><br />
 			</div>
 			<div style="float: left; width: 33.3%">
-				输出: <input type="button" onclick="clear3()" value="清除" /><br />
+				输出: <input type="button" onclick="clear3()" value="清除" /><br /><br />
 				<textarea id="code3" style="width: 98%; height: 500px"></textarea><br />
 			</div>
 			<br style="clear: both" />
@@ -43,9 +45,9 @@
 			function addparen (el, p1, p2) {
 				var s = el.selectionStart, e = el.selectionEnd;
 				el.value = el.value.substring(0, s) + p1 + el.value.substring(s, e) + p2 + el.value.substring(e);
-				el.selectionStart = s, el.selectionEnd = e + p1.length + p2.length;
+				el.selectionStart = s + p1.length, el.selectionEnd = e + p1.length; el.focus();
 			}
-			function addparenesc (el, p1, p2) {
+			function addqesc (el, p1, p2) {
 				var s = el.selectionStart, e = el.selectionEnd;
 				var t;
 				el.value = el.value.substring(0, s) + (t = '"' + el.value.substring(s, e).replace(/[\\"]/g, "\\$&") + '"') + el.value.substring(e);
