@@ -15,8 +15,8 @@
 				<input type="button" onclick="addparen($('code1'), '(', ')')" value="加括号" />
 				<input type="button" onclick="addparen($('code1'), '\'', '\'')" value="加单引号" />
 				<input type="button" onclick="addparen($('code1'), '&quot;', '&quot;')" value="加双引号" /><br />
-				<input type="button" onclick="addparen($('code1'), '$')" value="加美元符号" />
-				<input type="button" onclick="addparen($('code1'), '_')" value="加下划线" />
+				<input type="button" onclick="addsym($('code1'), '$')" value="加美元符号" />
+				<input type="button" onclick="addsym($('code1'), '_')" value="加下划线" />
 				<input type="button" onclick="addqesc($('code1'))" value="加双引号并转义" /><br />
 				<textarea id="code1" style="width: 98%; height: 500px"></textarea><br />
 			</div>
@@ -46,6 +46,11 @@
 				var s = el.selectionStart, e = el.selectionEnd;
 				el.value = el.value.substring(0, s) + p1 + el.value.substring(s, e) + p2 + el.value.substring(e);
 				el.selectionStart = s + p1.length, el.selectionEnd = e + p1.length; el.focus();
+			}
+			function addsym (el, p) {
+				var s = el.selectionStart, e = el.selectionEnd;
+				el.value = el.value.substring(0, s) + p + el.value.substring(e);
+				el.selectionStart = s + p.length, el.selectionEnd = s + p.length; el.focus();
 			}
 			function addqesc (el, p1, p2) {
 				var s = el.selectionStart, e = el.selectionEnd;
