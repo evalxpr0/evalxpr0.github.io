@@ -1,4 +1,12 @@
-var checked, lines, currline, tmpline, interval = false, callstack, callpointer, datastack, datapointer;
+var checked, lines, currline, tmpline, interval = false, callstack, callpointer, datastack, datapointer, luacode, luamode;
+var LuaScript2 = luajs.newContext();
+LuaScript2.loadStdLib();
+LuaScript2._G.stringMap.io.stringMap.write = function (val) {
+	$("code3").value += val;
+}
+LuaScript2._G.stringMap.parentEval = function (val) {
+	return myEval(val);
+}
 function check1 () {
 	checked = $("code1").value.split(/\r?\n/);
 	lines = checked.length;
@@ -7,6 +15,7 @@ function check1 () {
 	callstack = [], callpointer = 0, datastack = [], datapointer = 0;
 	$("code2").value = getdebug();
 	clear3();
+	luamode = false;
 }
 function step2 () {
 	var tmp, tmp2 = "";
@@ -15,7 +24,16 @@ function step2 () {
 		tmp = checked[tmpline++];
 		tmp2 += tmp + "\n";
 	} while (tmp.match(/\\*$/)[0].length % 2 === 1);
-	myEval(tmp2);
+	if (!luamode)
+		myEval(tmp2);
+	else if (!tmp2.match(/^\s*luaEnd\s*\(\s*\)\s*(;\s*)?$/))
+		luacode += tmp2;
+	else
+	{
+		luamode = false;
+		LuaScript2.loadString(luacode)();
+		luacode = null;
+	}
 	currline = tmpline;
 	$("code2").value = getdebug();
 }
@@ -165,4 +183,9 @@ function getdebug () {
 	}
 	vtable.Vnpop.fquote = false;
 	vtable.Vnpop._cook = -1;
+	
+	vtable.VnluaBegin = function () {
+		luacode = "";
+		luamode = true;
+	}
 } (vtable);
