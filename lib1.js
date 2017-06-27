@@ -29,6 +29,8 @@ function step2 () {
 		while (str[pos] === "=");
 		if (str[pos] === "[")
 			luaDelimiter = lev;
+		else
+			pos--;
 		return pos;
 	}
 	var tmp, tmp2 = "", charpos = 0, charlen;
