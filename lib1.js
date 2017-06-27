@@ -268,8 +268,16 @@ function getdebug () {
 	vtable.Vnpop.fquote = false;
 	vtable.Vnpop._cook = -1;
 	
+	vtable.VnevalLua = function (luaCode) {
+		LuaScript2.loadString(luaCode)();
+	}
+	vtable.VnevalLua.fquote = false;
+	vtable.VnevalLua._cook = -1;
+	
 	vtable.VnluaBegin = function () {
 		luacode = "";
 		luamode = true;
 	}
+	vtable.VnluaBegin.fquote = false;
+	vtable.VnluaBegin._cook = -1;
 } (vtable);
