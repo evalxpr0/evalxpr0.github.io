@@ -19,7 +19,7 @@ function check1 () {
 	luamode = false;
 }
 function step2 () {
-	function checkBeginBracket(str, pos)
+	function checkBeginBracket(str, pos, tlen, iscomment)
 	{
 		var lev = 2;
 		do {
@@ -30,7 +30,7 @@ function step2 () {
 		if (str[pos] === "[")
 			luaDelimiter = lev;
 		else
-			pos--;
+			pos = (iscomment ? tlen ? pos-1);
 		return pos;
 	}
 	var tmp, tmp2 = "", charpos = 0, charlen;
@@ -63,11 +63,11 @@ function step2 () {
 				case "-":
 					if (tmp[++charpos] === "-")
 					{
-						charpos = (tmp[++charpos] !== "[" ? charlen : checkBeginBracket(tmp, charpos));
+						charpos = (tmp[++charpos] !== "[" ? charlen : checkBeginBracket(tmp, charpos, charlen, 1));
 					}
 					break;
 				case "[":
-					charpos = checkBeginBracket(tmp, charpos);
+					charpos = checkBeginBracket(tmp, charpos, null, 0);
 					break;
 				}
 				break;
