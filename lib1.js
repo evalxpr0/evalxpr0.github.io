@@ -30,7 +30,7 @@ function step2 () {
 		if (str[pos] === "[")
 			luaDelimiter = lev;
 		else
-			pos = (iscomment ? tlen ? pos-1);
+			pos = (iscomment ? tlen : pos-1);
 		return pos;
 	}
 	var tmp, tmp2 = "", charpos = 0, charlen;
