@@ -1,4 +1,5 @@
 var checked, lines, currline, tmpline, interval = false, callstack, callpointer, datastack, datapointer, luacode, luamode;
+var luaDelimiter = 0, luaEscaping = 0;
 var LuaScript2 = luajs.newContext();
 LuaScript2.loadStdLib();
 LuaScript2._G.stringMap.io.stringMap.write = function (val) {
@@ -18,21 +19,102 @@ function check1 () {
 	luamode = false;
 }
 function step2 () {
-	var tmp, tmp2 = "";
+	function checkBeginBracket(str, pos)
+	{
+		var lev = 2;
+		do {
+			pos++;
+			lev++;
+		}
+		while (str[pos] === "=");
+		if (str[pos] === "[")
+			luaDelimiter = lev;
+		return pos;
+	}
+	var tmp, tmp2 = "", charpos = 0, charlen;
 	tmpline = currline;
-	do {
-		tmp = checked[tmpline++];
-		tmp2 += tmp + "\n";
-	} while (tmp.match(/\\*$/)[0].length % 2 === 1);
 	if (!luamode)
+	{
+		do {
+			tmp = checked[tmpline++];
+			tmp2 += tmp + "\n";
+		} while (tmp.match(/\\*$/)[0].length % 2 === 1);
 		myEval(tmp2);
-	else if (!tmp2.match(/^\s*luaEnd\s*\(\s*\)\s*(;\s*)?$/))
-		luacode += tmp2;
+	}
 	else
 	{
-		luamode = false;
-		LuaScript2.loadString(luacode)();
-		luacode = null;
+		tmp = checked[tmpline++];
+		luaEscaping = false;
+		for (charlen = tmp.length; charpos < charlen; charpos++)
+		{
+			switch (luaDelimiter)
+			{
+			case 0: // blank mode (main)
+				switch (tmp[charpos])
+				{
+				case "'": 
+					luaDelimiter = 1;
+					break;
+				case '"': 
+					luaDelimiter = 2;
+					break;
+				case "-":
+					if (tmp[++charpos] === "-")
+					{
+						charpos = (tmp[++charpos] !== "[" ? charlen : checkBeginBracket(tmp, charpos));
+					}
+					break;
+				case "[":
+					charpos = checkBeginBracket(tmp, charpos);
+					break;
+				}
+				break;
+			case 1: // ' 
+			case 2: // "
+				if (!luaEscaping)
+				{
+					if (tmp[charpos] === "\\")
+					{
+						luaEscaping = 1;
+					}
+					else if (luaDelimiter === 1 ? "'" : '"')
+					{
+						luaDelimiter = 0;
+					}
+				}
+				else
+				{
+					luaEscaping = 0;
+				}
+				break;
+			default: // [[ ]], [=[ ]=], etc.
+				if (luaEscaping)
+				{
+					if (tmp[charpos] === "=")
+						luaEscaping ++;
+					else if (tmp[charpos] === "]")
+					{
+						if (luaEscaping === luaDelimiter)
+							luaDelimiter = 0;
+						luaEscaping = 0;
+					}
+				}
+				else if (tmp[charpos] === "]")
+				{
+					luaEscaping = 3
+				}
+			}
+		}
+		if (luaDelimiter || !tmp.match(/^\s*luaEnd\s*\(\s*\)\s*(;\s*)?$/))
+		{
+			luacode += tmp + "\n";
+		}
+		else
+		{
+			luamode = false;
+			LuaScript2.loadString(luacode)();
+			luacode = null;
+		}
 	}
 	currline = tmpline;
 	$("code2").value = getdebug();
